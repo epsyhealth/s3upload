@@ -1,8 +1,18 @@
+import os
+from os import getenv
+from os.path import basename
+
 import boto3
 import click as click
-from loguru import logger
+import sentry_sdk
 from botocore.exceptions import ClientError
-from os.path import basename
+from loguru import logger
+
+if "SENTRY_DSN" in os.environ:
+    sentry_sdk.init(
+        dsn=getenv("SENTRY_DSN"),
+        traces_sample_rate=1.0,
+    )
 
 
 @click.command()
